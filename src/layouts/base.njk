@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <title>{{ title }}</title>
+  </head>
+  <body style="background: pink;">
+    {% block content %}
+    {{ content | safe}}
+    {% endblock %}
+  </body>
+</html>

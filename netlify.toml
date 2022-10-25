@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+	functions = "src/netlify/functions"
+  publish = "dist"
+
+[functions]
+  node_bundler = "esbuild"
+  [functions.hello]
+    included_files = ["src/layouts/base.njk"]
+
+[[redirects]]
+  from = "/jobs/*"
+  to = "/.netlify/functions/hello?id=:splat"
+  status = 200
