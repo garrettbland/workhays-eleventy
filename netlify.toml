@@ -3,6 +3,9 @@
 	functions = "src/netlify/functions"
   publish = "dist"
 
+[dev]
+  command = "npm run dev"
+
 [functions]
   node_bundler = "esbuild"
   [functions.hello]

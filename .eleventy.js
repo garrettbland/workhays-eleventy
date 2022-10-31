@@ -1,21 +1,32 @@
-const Nunjucks = require("nunjucks");
+const Nunjucks = require('nunjucks')
 
 module.exports = function (eleventyConfig) {
-  let nunjucksEnvironment = new Nunjucks.Environment(
-    new Nunjucks.FileSystemLoader("src")
-  );
+    let nunjucksEnvironment = new Nunjucks.Environment(
+        new Nunjucks.FileSystemLoader('src')
+    )
 
-  eleventyConfig.setLibrary("njk", nunjucksEnvironment);
+    eleventyConfig.setLibrary('njk', nunjucksEnvironment)
 
-  eleventyConfig.addPassthroughCopy({ "src/public": "/" });
+    eleventyConfig.addPassthroughCopy({ 'src/public': '/' })
 
-  return {
-    dir: {
-      // ⚠️ These values are both relative to your input directory.
-      input: "src/pages",
-      includes: "../includes",
-      layouts: "../layouts",
-      output: "./dist",
-    },
-  };
-};
+    /**
+     * Add version shortcode to version and cache bust our stylesheet and
+     * javascript packages
+     */
+    eleventyConfig.addGlobalData(
+        'version',
+        process.env.NODE_ENV === 'production'
+            ? `.${process.env.GIT_SHORT_SHA}.`
+            : '.'
+    )
+
+    return {
+        dir: {
+            // ⚠️ These values are both relative to your input directory.
+            input: 'src/pages',
+            includes: '../includes',
+            layouts: '../layouts',
+            output: './dist',
+        },
+    }
+}
